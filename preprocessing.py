@@ -1,27 +1,24 @@
 import json
 
-def load_reddit_comment_data(data_directory):
+def load_reddit_comment_data():
 
-    comments_data = [] # list object that will store the loaded Reddit comments
-
-    # we first open the file that includes our dataset
-    with open(data_directory, 'r', encoding='utf-8') as f:
-        # iterate the file, reading it line by line
+    submissions_data = []
+    comments_data = []
+    
+    with open("dataset_folder/dogs_submissions.ndjson", 'r', encoding='utf-8') as f:
         for line in f:
-            # load the data petraining to a line into a json object in memory
             data = json.loads(line)
+            submissions_data.append(data)
 
-            # append the comment
+    with open("dataset_folder/dogs_comments.ndjson", 'r', encoding='utf-8') as f:
+        for line in f:
+            data = json.loads(line)
             comments_data.append(data)
 
-    # the method returns all the loaded Reddit comments
-    return comments_data
+    comments_data = [ i["body"].lower() for i in comments_data]
+    submissions_data = [ i["selftext"].lower() for i in submissions_data]
 
-# our data is stored in this file
-file_paths = [
-    "dataset_folder/dogs_submissions.ndjson",
-    "dataset_folder/dogs_comments.ndjson"
-]
-# lets load our dataset into memory
-reddit_data = load_reddit_comment_data(file_paths[0])
-print(reddit_data[0]["selftext"].lower())
+    return submissions_data+comments_data
+
+reddit_data = load_reddit_comment_data()
+print(reddit_data[0])
