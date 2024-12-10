@@ -4,7 +4,7 @@ def load_reddit_comment_data():
 
     submissions_data = []
     comments_data = []
-    
+
     with open("dataset_folder/dogs_submissions.ndjson", 'r', encoding='utf-8') as f:
         for line in f:
             data = json.loads(line)
